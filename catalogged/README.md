@@ -1,6 +1,6 @@
-# flutterapp
+# catalogged
 
-A new Flutter application.
+A flutter application to manage your receipts
 
 ## Getting Started
 

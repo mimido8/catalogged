@@ -1,4 +1,4 @@
-package com.example.flutterapp
+package com.example.catalogged
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,5 +1,5 @@
-name: flutterapp
-description: A new Flutter application.
+name: catalogged
+description: A flutter application to manage your receipts
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
