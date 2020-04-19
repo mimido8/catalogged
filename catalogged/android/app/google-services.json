@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "292548117966",
+    "firebase_url": "https://catalogged-c295d.firebaseio.com",
+    "project_id": "catalogged-c295d",
+    "storage_bucket": "catalogged-c295d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292548117966:android:497fbb645d7dd02093579f",
+        "android_client_info": {
+          "package_name": "com.app.catalogged"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292548117966-lhifbavodi0q2pk9vlogqli3me03h1e2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB63pBn1Ex5CUpguWkZ2nko6S0yyUsckks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292548117966-lhifbavodi0q2pk9vlogqli3me03h1e2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
