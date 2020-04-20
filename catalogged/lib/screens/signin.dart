@@ -1,26 +1,39 @@
+import 'package:catalogged/screens/registration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
 class SignIn extends StatefulWidget{
+  final Function toggleView;
+  SignIn({this.toggleView});
+
   @override
   SignInState createState() => SignInState();
 }
 
 class SignInState extends State<SignIn>{
+
+  static const routeName = '/signUp';
   String _email, _password;
   final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: (){},
-        ),
+        elevation: 0.0,
+        backgroundColor: Colors.lightBlueAccent,
         title: Text('Sign in'),
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.person_add),
+            label: Text("Sign up", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black, decoration: TextDecoration.underline),
+            ),
+            onPressed: (){
+              widget.toggleView();
+            },
+          ),
+        ],
       ),
       body: Form(
         key: _keyForm,
@@ -136,6 +149,11 @@ class SignInState extends State<SignIn>{
                     side: BorderSide(color: Colors.white, width: 3.0, style: BorderStyle.solid),
                     borderRadius: BorderRadius.circular(10.0),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                ],
               ),
             ],
           ),

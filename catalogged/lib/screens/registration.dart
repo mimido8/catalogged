@@ -1,26 +1,43 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:catalogged/screens/signin.dart';
+import 'package:catalogged/services/auth.dart';
+import 'package:catalogged/screens/home.dart';
 
 class SignUp extends StatefulWidget{
+  final Function toggleView;
+  SignUp({this.toggleView});
+
   @override
   SignUpState createState() => SignUpState();
 }
 
 class SignUpState extends State<SignUp>{
-  String _email, _password, _password2, _firstName, _lastName, _phoneNumber;
+  static const routeName = '/signUp';
+  //creating auth instance
+  final AuthService _auth = AuthService();
+  String _email, _password;
+  String error = "";
   final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: (){},
-        ),
+        elevation: 0.0,
+        backgroundColor: Colors.lightBlueAccent,
         title: Text('Sign Up'),
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.person),
+            label: Text("Sign in", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black, decoration: TextDecoration.underline),
+            ),
+            onPressed: (){
+              widget.toggleView();
+            },
+          ),
+        ],
       ),
       body: Form(
         key: _keyForm,
@@ -64,58 +81,12 @@ class SignUpState extends State<SignUp>{
               ),
               SizedBox(
                   child: Center(
-                    child: Text("or Sign up with us!", style: TextStyle(fontSize: 15, color: Colors.white),),
+                    child: Text("or Sign up with us!", style: TextStyle(fontSize: 15, color: Colors.black),),
                   )
               ),
               SizedBox(
                 height: 20,
               ),
-              /*TextFormField(
-                  validator: (input) {
-                    if(input.isEmpty){
-                      return 'Please enter your first name';
-                    }
-                    return null;
-                  },
-                  onSaved: (input) => _firstName = input,
-                  style: TextStyle(fontSize: 15, color: Colors.black),
-                  decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'First name',
-                      contentPadding: const EdgeInsets.all(15),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(8),
-                      )
-                  )
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                  validator: (input) {
-                    if(input.isEmpty){
-                      return 'Please enter your last name';
-                    }
-                    return null;
-                  },
-                  onSaved: (input) => _lastName = input,
-                  style: TextStyle(fontSize: 15, color: Colors.black),
-                  decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Last name',
-                      contentPadding: const EdgeInsets.all(15),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(8),
-                      )
-                  )
-              ),
-              SizedBox(
-                height: 20,
-              ), */
               TextFormField(
                   validator: (input) {
                     if(input.isEmpty){
@@ -132,29 +103,6 @@ class SignUpState extends State<SignUp>{
                       filled: true,
                       fillColor: Colors.white,
                       hintText: 'Email',
-                      contentPadding: const EdgeInsets.all(15),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(8),
-                      )
-                  )
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                  validator: (input) {
-                    if(input.isEmpty){
-                      return 'Please enter your phone number';
-                    }
-                    return null;
-                  },
-                  onSaved: (input) => _phoneNumber = input,
-                  style: TextStyle(fontSize: 15, color: Colors.black),
-                  decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Phone number',
                       contentPadding: const EdgeInsets.all(15),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
@@ -199,7 +147,6 @@ class SignUpState extends State<SignUp>{
                     }
                     return null;
                   },
-                  onSaved: (input) => _password2 = input,
                   style: TextStyle(fontSize: 15, color: Colors.black),
                   obscureText: true,
                   decoration: InputDecoration(
@@ -213,17 +160,21 @@ class SignUpState extends State<SignUp>{
                       )
                   )
               ),
-              SizedBox(
-                height: 20,
-              ),
+              Text(error, style: TextStyle(color: Colors.red, fontSize: 15)),
               FlatButton(
-                onPressed: (){
+                onPressed: () async{
                   FormState keyState = _keyForm.currentState;
                   //saving values into variables
                   keyState.save();
-                  keyState.validate();
+                  if(keyState.validate()){
+                    dynamic result = await _auth.signUpUser(_email, _password);
+                    //if result == null
+                    if(result==null){
+                      setState(() => error = 'Invalid credentials');
+                    }
+                  }
                 },
-                child: Text("Login",
+                child: Text("Sign up",
                   style: TextStyle(fontSize: 15,
                       color: Colors.white),
                 ),
@@ -232,6 +183,11 @@ class SignUpState extends State<SignUp>{
                   side: BorderSide(color: Colors.white, width: 3.0, style: BorderStyle.solid),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                ],
               ),
             ],
           ),
