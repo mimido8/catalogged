@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
         title: 'CataLogged',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primaryColor: Colors.blue[900],
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: Wrapper(),

@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:catalogged/screens/signin.dart';
 import 'package:catalogged/services/auth.dart';
-import 'package:catalogged/screens/home.dart';
 
 class SignUp extends StatefulWidget{
   final Function toggleView;
@@ -17,6 +15,8 @@ class SignUpState extends State<SignUp>{
   static const routeName = '/signUp';
   //creating auth instance
   final AuthService _auth = AuthService();
+
+
   String _email, _password;
   String error = "";
   final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
@@ -24,21 +24,6 @@ class SignUpState extends State<SignUp>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.lightBlueAccent,
-        title: Text('Sign Up'),
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text("Sign in", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black, decoration: TextDecoration.underline),
-            ),
-            onPressed: (){
-              widget.toggleView();
-            },
-          ),
-        ],
-      ),
       body: Form(
         key: _keyForm,
         child: Container(
@@ -48,40 +33,25 @@ class SignUpState extends State<SignUp>{
           child: ListView(
             children: <Widget>[
               SizedBox(
-                height: 20,
+                height: 30,
               ),
-              Image.asset(
-                'assets/images/receipt-logo.png',
-                height: 80,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/receipt-logo.png',
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("CataLogged", style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.white))
+                ],
               ),
-              SizedBox(
-                height: 50,
-              ),
-              FlatButton(
-                color: Colors.white,
-                padding: const EdgeInsets.all(15),
-                textColor: Colors.black,
-                onPressed: () {
-                  /*...*/
-                },
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white, width: 3.0, style: BorderStyle.solid),
-                    borderRadius: BorderRadius.circular(10.0)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset('assets/images/google-logo.png', height: 15,),
-                    SizedBox(width: 10,),
-                    Text('Sign in with Google', style: TextStyle(fontSize: 15),)
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
+              Center(child: Text(error, style: TextStyle(color: Colors.red, fontSize: 15))),
               SizedBox(
                   child: Center(
-                    child: Text("or Sign up with us!", style: TextStyle(fontSize: 15, color: Colors.black),),
+                    child: Text("Sign up with us!", style: TextStyle(fontSize: 15, color: Colors.white),),
                   )
               ),
               SizedBox(
@@ -160,7 +130,7 @@ class SignUpState extends State<SignUp>{
                       )
                   )
               ),
-              Text(error, style: TextStyle(color: Colors.red, fontSize: 15)),
+              Center(child: Text(error, style: TextStyle(color: Colors.red, fontSize: 15))),
               FlatButton(
                 onPressed: () async{
                   FormState keyState = _keyForm.currentState;
@@ -180,13 +150,19 @@ class SignUpState extends State<SignUp>{
                 ),
                 padding: const EdgeInsets.all(15),
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.white, width: 3.0, style: BorderStyle.solid),
+                  side: BorderSide(color: Colors.white, width: 5.0, style: BorderStyle.solid),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Text("Already Registered?", style: TextStyle(fontSize: 15, color: Colors.white)),
+                  FlatButton(
+                    child: Text("Sign In", style: TextStyle(fontSize: 18, color: Colors.cyanAccent, decoration: TextDecoration.underline, fontWeight: FontWeight.bold)),
+                    onPressed: (){
+                      widget.toggleView();},
+                  )
                 ],
               ),
             ],
@@ -195,5 +171,7 @@ class SignUpState extends State<SignUp>{
       ),
     );
     //throw UnimplementedError();
+
+
   }
 }
