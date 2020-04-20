@@ -1,7 +1,10 @@
-import 'package:catalogged/screens/registration.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:catalogged/services/auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 
 class SignIn extends StatefulWidget{
   final Function toggleView;
@@ -12,29 +15,17 @@ class SignIn extends StatefulWidget{
 }
 
 class SignInState extends State<SignIn>{
+  //creating auth instance
+  final AuthService _auth = AuthService();
 
   static const routeName = '/signUp';
   String _email, _password;
+  String error = '';
   final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.lightBlueAccent,
-        title: Text('Sign in'),
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person_add),
-            label: Text("Sign up", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black, decoration: TextDecoration.underline),
-            ),
-            onPressed: (){
-              widget.toggleView();
-            },
-          ),
-        ],
-      ),
       body: Form(
         key: _keyForm,
         child: Container(
@@ -44,21 +35,34 @@ class SignInState extends State<SignIn>{
           child: ListView(
             children: <Widget>[
               SizedBox(
-                height: 20,
+                height: 30,
               ),
-              Image.asset(
-                'assets/images/receipt-logo.png',
-                height: 80,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/receipt-logo.png',
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("CataLogged", style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.white))
+                ],
               ),
               SizedBox(
-                height: 50,
+                height: 30,
               ),
               FlatButton(
                 color: Colors.white,
                 padding: const EdgeInsets.all(15),
                 textColor: Colors.black,
-                onPressed: () {
-                  /*...*/
+                onPressed: () async{
+                  dynamic result = await _auth.googleSignIn();
+                  //if result == null
+                  if(result==null){
+                    setState(() => error = 'Problems signing in with Google');
+                  }
                 },
                 shape: RoundedRectangleBorder(
                     side: BorderSide(color: Colors.white, width: 3.0, style: BorderStyle.solid),
@@ -134,25 +138,38 @@ class SignInState extends State<SignIn>{
                 height: 20,
               ),
               FlatButton(
-                onPressed: (){
+                onPressed: () async {
                   FormState keyState = _keyForm.currentState;
                   //saving values into variables
                   keyState.save();
-                  keyState.validate();
-                },
+                  if(keyState.validate()) {
+                    dynamic result = await _auth.signInUser(_email, _password);
+                    //if result == null
+                    if(result==null){
+                    setState(() => error = 'Incorrect email/password combo');
+                     }
+                }
+                  },
                 child: Text("Login",
                   style: TextStyle(fontSize: 15,
                       color: Colors.white),
                 ),
                 padding: const EdgeInsets.all(15),
                 shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white, width: 3.0, style: BorderStyle.solid),
+                    side: BorderSide(color: Colors.white, width: 5.0, style: BorderStyle.solid),
                     borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Text("Not Registered?", style: TextStyle(fontSize: 15, color: Colors.white)),
+                  FlatButton(
+                    child: Text("Sign Up", style: TextStyle(fontSize: 18, color: Colors.cyanAccent, decoration: TextDecoration.underline, fontWeight: FontWeight.bold)),
+                    onPressed: (){
+                      widget.toggleView();},
+                  )
                 ],
               ),
             ],
@@ -163,3 +180,5 @@ class SignInState extends State<SignIn>{
     //throw UnimplementedError();
   }
 }
+
+
