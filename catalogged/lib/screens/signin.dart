@@ -32,7 +32,7 @@ class SignInState extends State<SignIn> {
           child: ListView(
             children: <Widget>[
               SizedBox(
-                height: 30,
+                height: 60,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

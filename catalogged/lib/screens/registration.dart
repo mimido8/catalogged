@@ -33,7 +33,7 @@ class SignUpState extends State<SignUp>{
           child: ListView(
             children: <Widget>[
               SizedBox(
-                height: 30,
+                height: 60,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +51,7 @@ class SignUpState extends State<SignUp>{
               Center(child: Text(error, style: TextStyle(color: Colors.red, fontSize: 15))),
               SizedBox(
                   child: Center(
-                    child: Text("Sign up with us!", style: TextStyle(fontSize: 15, color: Colors.white),),
+                    child: Text("Sign up with us!", style: TextStyle(fontSize: 20, color: Colors.white70),),
                   )
               ),
               SizedBox(

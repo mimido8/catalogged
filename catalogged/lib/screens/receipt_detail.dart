@@ -13,19 +13,11 @@ class ReceiptDetail extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: Colors.blue[700],
           title: Text("Receipt Detail", textAlign: TextAlign.left),
-          actions: <Widget>[
-            FlatButton.icon(
-              icon: Icon(Icons.account_circle, color: Colors.white),
-              label: Text("logout", style: TextStyle(color: Colors.white)),
-              onPressed: () async {
-                await _auth.signOut();
-              },
-            )
-          ],
         ),
         body: SingleChildScrollView(
+          padding: const EdgeInsets.all(15),
             child: Center(
                 child: Container(
                     child: Column(children: <Widget>[
