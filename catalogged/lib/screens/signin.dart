@@ -1,12 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:catalogged/services/auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
-
-class SignIn extends StatefulWidget{
+class SignIn extends StatefulWidget {
   final Function toggleView;
   SignIn({this.toggleView});
 
@@ -14,7 +11,7 @@ class SignIn extends StatefulWidget{
   SignInState createState() => SignInState();
 }
 
-class SignInState extends State<SignIn>{
+class SignInState extends State<SignIn> {
   //creating auth instance
   final AuthService _auth = AuthService();
 
@@ -47,7 +44,11 @@ class SignInState extends State<SignIn>{
                   SizedBox(
                     width: 10,
                   ),
-                  Text("CataLogged", style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.white))
+                  Text("CataLogged",
+                      style: TextStyle(
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white))
                 ],
               ),
               SizedBox(
@@ -57,22 +58,33 @@ class SignInState extends State<SignIn>{
                 color: Colors.white,
                 padding: const EdgeInsets.all(15),
                 textColor: Colors.black,
-                onPressed: () async{
+                onPressed: () async {
                   dynamic result = await _auth.googleSignIn();
                   //if result == null
-                  if(result==null){
+                  if (result == null) {
                     setState(() => error = 'Problems signing in with Google');
                   }
                 },
                 shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white, width: 3.0, style: BorderStyle.solid),
+                    side: BorderSide(
+                        color: Colors.white,
+                        width: 3.0,
+                        style: BorderStyle.solid),
                     borderRadius: BorderRadius.circular(10.0)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset('assets/images/google-logo.png', height: 15,),
-                    SizedBox(width: 10,),
-                    Text('Sign in with Google', style: TextStyle(fontSize: 15),)
+                    Image.asset(
+                      'assets/images/google-logo.png',
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'Sign in with Google',
+                      style: TextStyle(fontSize: 15),
+                    )
                   ],
                 ),
               ),
@@ -80,42 +92,41 @@ class SignInState extends State<SignIn>{
                 height: 20,
               ),
               SizedBox(
-                child: Center(
-                  child: Text("or", style: TextStyle(fontSize: 15, color: Colors.white),),
-                )
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                validator: (input) {
-                  if(input.isEmpty){
-                    return 'Please enter an email';
-                  }
-                  else if(!EmailValidator.validate(input)){
-                    return 'Please enter a valid email';
-                  }
-                  return null;
-                },
-                onSaved: (input) => _email = input,
-                style: TextStyle(fontSize: 15, color: Colors.black),
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: 'Email',
-                    contentPadding: const EdgeInsets.all(15),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(8),
-                    )
-                )
-              ),
+                  child: Center(
+                child: Text(
+                  "or",
+                  style: TextStyle(fontSize: 15, color: Colors.white),
+                ),
+              )),
               SizedBox(
                 height: 20,
               ),
               TextFormField(
                   validator: (input) {
-                    if(input.length < 6){
+                    if (input.isEmpty) {
+                      return 'Please enter an email';
+                    } else if (!EmailValidator.validate(input)) {
+                      return 'Please enter a valid email';
+                    }
+                    return null;
+                  },
+                  onSaved: (input) => _email = input,
+                  style: TextStyle(fontSize: 15, color: Colors.black),
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Email',
+                      contentPadding: const EdgeInsets.all(15),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(8),
+                      ))),
+              SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                  validator: (input) {
+                    if (input.length < 6) {
                       return 'Your password must have atleast 6 characters';
                     }
                     return null;
@@ -131,9 +142,7 @@ class SignInState extends State<SignIn>{
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                         borderRadius: BorderRadius.circular(20.0),
-                      )
-                  )
-              ),
+                      ))),
               SizedBox(
                 height: 20,
               ),
@@ -142,33 +151,42 @@ class SignInState extends State<SignIn>{
                   FormState keyState = _keyForm.currentState;
                   //saving values into variables
                   keyState.save();
-                  if(keyState.validate()) {
+                  if (keyState.validate()) {
                     dynamic result = await _auth.signInUser(_email, _password);
                     //if result == null
-                    if(result==null){
-                    setState(() => error = 'Incorrect email/password combo');
-                     }
-                }
-                  },
-                child: Text("Login",
-                  style: TextStyle(fontSize: 15,
-                      color: Colors.white),
+                    if (result == null) {
+                      setState(() => error = 'Incorrect email/password combo');
+                    }
+                  }
+                },
+                child: Text(
+                  "Login",
+                  style: TextStyle(fontSize: 15, color: Colors.white),
                 ),
                 padding: const EdgeInsets.all(15),
                 shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white, width: 5.0, style: BorderStyle.solid),
-                    borderRadius: BorderRadius.circular(10.0),
+                  side: BorderSide(
+                      color: Colors.white,
+                      width: 5.0,
+                      style: BorderStyle.solid),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("Not Registered?", style: TextStyle(fontSize: 15, color: Colors.white)),
+                  Text("Not Registered?",
+                      style: TextStyle(fontSize: 15, color: Colors.white)),
                   FlatButton(
-                    child: Text("Sign Up", style: TextStyle(fontSize: 18, color: Colors.cyanAccent, decoration: TextDecoration.underline, fontWeight: FontWeight.bold)),
-                    onPressed: (){
-                      widget.toggleView();},
+                    child: Text("Sign Up",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.cyanAccent,
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold)),
+                    onPressed: () {
+                      widget.toggleView();
+                    },
                   )
                 ],
               ),
@@ -180,5 +198,3 @@ class SignInState extends State<SignIn>{
     //throw UnimplementedError();
   }
 }
-
-

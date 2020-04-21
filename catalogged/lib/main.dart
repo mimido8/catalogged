@@ -7,11 +7,17 @@ import 'package:catalogged/screens/registration.dart';
 import 'package:catalogged/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:catalogged/models/user.dart';
+import 'package:provider/provider.dart';
+import 'package:catalogged/notifier/receipt_notifier.dart';
 
-
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ReceiptNotifier(),
+        ),
+      ],
+      child: MyApp(),
+    ));
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -19,11 +25,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
       value: AuthService().user,
-        child: MaterialApp(
+      child: MaterialApp(
         title: 'CataLogged',
         theme: ThemeData(
           primaryColor: Colors.blue[900],
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+//          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: Wrapper(),
       ),
