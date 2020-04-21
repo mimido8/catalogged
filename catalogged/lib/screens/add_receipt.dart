@@ -47,7 +47,9 @@ class _AddReceiptState extends State<AddReceipt> {
 
   Widget _showImage() {
     if (_imageFile == null && _imageUrl == null) {
-      return Text("image placeholder");
+      return Container(
+        height: 100, width: 100, color: Colors.black12, child: Center(child: Text('+ add image')),
+      );
     } else if (_imageFile != null) {
       print('showing image from local file');
       return Stack(
@@ -254,17 +256,8 @@ class _AddReceiptState extends State<AddReceipt> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.blue[700],
         title: Text("Add New Receipt", textAlign: TextAlign.left),
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.account_circle, color: Colors.white),
-            label: Text("logout", style: TextStyle(color: Colors.white)),
-            onPressed: () async {
-              await _auth.signOut();
-            },
-          )
-        ],
       ),
       body: SingleChildScrollView(
           padding: EdgeInsets.all(32),
@@ -275,11 +268,11 @@ class _AddReceiptState extends State<AddReceipt> {
                 children: <Widget>[
                   _showImage(),
                   SizedBox(height: 16),
-                  Text(
+                  /*Text(
                     "Create Receipt",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 30),
-                  ),
+                  ),*/
                   SizedBox(height: 16),
                   ButtonTheme(
                     child: RaisedButton(

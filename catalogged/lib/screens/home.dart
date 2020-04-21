@@ -28,7 +28,14 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: Colors.blue[700],
+          title: Row(
+            children: <Widget>[
+              Image.asset('assets/images/receipt-logo.png', height: 35),
+              SizedBox(width: 10),
+              Text('CataLogged', style: TextStyle(color: Colors.white))
+            ],
+          ),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add_circle_outline, color: Colors.white),
@@ -50,6 +57,7 @@ class HomePageState extends State<HomePage> {
         body: ListView.separated(
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
+              contentPadding: const EdgeInsets.all(10),
                 leading: Image.network(
                   receiptNotifier.receiptList[index].img_url,
                   width: 120,
